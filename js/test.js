@@ -17,8 +17,8 @@ YELLOW = new THREE.Color(0xf2eb0f);
 
 
 
-function cube(pstX=0, pstY=0, pstZ=0) {
-	const geometry = new THREE.BoxGeometry();						// vertices & faces
+function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
+	const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);						// vertices & faces
 	geometry.faces[0].color = new THREE.Color(GREEN);				// green
 	geometry.faces[1].color = new THREE.Color(GREEN);
 
@@ -67,6 +67,8 @@ function init() {
     scene.add(light1);
     scene.add(light2);
 	
+    //scene.add(cube(pstX=0, pstY=0, pstZ=0, sizeX=3.2, sizeY=3.2, sizeZ=3.2));
+
 	// mid
     scene.add(cube(pstX=0));
     scene.add(cube(pstX=-1.1));
