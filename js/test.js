@@ -1,14 +1,9 @@
-
-
 // Various three.js global variables
 var scene,
     camera,
     renderer,
     controls,
     group;
-
-const pointer = new THREE.Vector2();
-const raycaster = new THREE.Raycaster();
 
 // colours of the faces
 GREEN = new THREE.Color(0x2bb81c);
@@ -50,28 +45,14 @@ function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
 }
 
 function pieces(dimensions) {
-    for (var i = -1.1; i < dimensions-1; i+=1.1) {
-        for (var j = -1.1; j < dimensions-1; j+=1.1){
-            for (var k = -1.1; k < dimensions-1; k+=1.1){
+    for (var i = -1.07; i < dimensions-1; i+=1.07) {
+        for (var j = -1.07; j < dimensions-1; j+=1.07){
+            for (var k = -1.07; k < dimensions-1; k+=1.07){
                 scene.add(cube(pstX=i, pstY=j, pstZ=k));
-
-                if (k == -1.1){
-                    back_face.push(cube(pstX=i, pstY=j, pstZ=k));
-                    cube(pstX=i, pstY=j, pstZ=k).rotation.y += 0.01;
-                }
-                if (k == 0){
-                    mid_face.push(cube(pstX=i, pstY=j, pstZ=k));
-                }
-                if (k == 1.1){
-                    front_face.push(cube(pstX=i, pstY=j, pstZ=k));
-                }
-
             }
         }
-    }
+    }  
 }
-
-
 
 
 function init() {
