@@ -45,7 +45,15 @@ function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
 	scene.add(cube); 
 }
 
-
+function pieces(n) {
+    for (var i = -1.1; i < n-1; i+=1.1) {
+        for (var j = -1.1; j < n-1; j+=1.1){
+            for (var k = -1.1; k < n-1; k+=1.1){
+                scene.add(cube(pstX=i, pstY=j, pstZ=k));
+            }
+        }
+    }
+}
 
 
 function init() {
@@ -53,22 +61,23 @@ function init() {
     // Set up scene + renderer
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
+    camera.position.z = 7;
 
     renderer =  new THREE.WebGLRenderer();
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild( renderer.domElement );
 
     // Create lights, add lights to scene
-    var light1 = new THREE.DirectionalLight( 0xDDEED3, 1 );
+    var light1 = new THREE.DirectionalLight(0xDDEED3, 1);
     var light2 = new THREE.AmbientLight(0x7D7D7D);
     light1.position.set( 0, 0, 1 );
 
     scene.add(light1);
     scene.add(light2);
 	
+    pieces(3);
+    /**
     //scene.add(cube(pstX=0, pstY=0, pstZ=0, sizeX=3.2, sizeY=3.2, sizeZ=3.2));
-
 	// mid
     scene.add(cube(pstX=0));
     scene.add(cube(pstX=-1.1));
@@ -107,11 +116,12 @@ function init() {
     scene.add(cube(pstX=1.1, pstY=-1.1, pstZ=-1.1));
     scene.add(cube(pstX=-1.1, pstY=1.1, pstZ=-1.1));
     scene.add(cube(pstX=-1.1, pstY=-1.1, pstZ=-1.1));
+    **/
 
 
     // Orbital controls (rotation)
     controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.autoRotate = true;
+    //controls.autoRotate = true;
     controls.update();
 }
 
