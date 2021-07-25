@@ -13,30 +13,35 @@ ORANGE = new THREE.Color(0xe37602);
 WHITE = new THREE.Color(0xd5e7e8);
 YELLOW = new THREE.Color(0xf2eb0f);
 const colours = [GREEN, BLUE, RED, ORANGE, WHITE, YELLOW];
-const back_face = [];
-const mid_face = [];
-const front_face = [];
-const newface = [];
+
+var back_face = [];       // B slice
+var mid_face = [];        // S slice
+var front_face = [];      // F slice
+
+var rightPressed = false;
+var leftPressed = false;
+var upPressed = false;
+var downPressed = false;
 
 function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
-	const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);						        // vertices & faces
-	geometry.faces[0].color = GREEN;				
-	geometry.faces[1].color = GREEN;
+	const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);						                 // vertices & faces
+	geometry.faces[0].color = RED;				
+	geometry.faces[1].color = RED;
 
-	geometry.faces[2].color = BLUE;				
-	geometry.faces[3].color = BLUE;
+	geometry.faces[2].color = ORANGE;				
+	geometry.faces[3].color = ORANGE;
 
-	geometry.faces[4].color = RED;				
-	geometry.faces[5].color = RED;
+	geometry.faces[4].color = WHITE;				
+	geometry.faces[5].color = WHITE;
 
-	geometry.faces[6].color = ORANGE;			
-	geometry.faces[7].color = ORANGE;
+	geometry.faces[6].color = YELLOW;			
+	geometry.faces[7].color = YELLOW;
 
-	geometry.faces[8].color = WHITE; 	
-	geometry.faces[9].color = WHITE;
+	geometry.faces[8].color = GREEN; 	
+	geometry.faces[9].color = GREEN;
 
-	geometry.faces[10].color = YELLOW;	
-	geometry.faces[11].color = YELLOW;
+	geometry.faces[10].color = BLUE;	
+	geometry.faces[11].color = BLUE;
 
 	const material = new THREE.MeshBasicMaterial({color: 0xffffff, vertexColors: THREE.FaceColors});   // colour
 	const cube = new THREE.Mesh(geometry, material);	                 // applies material to a given geometry
@@ -49,16 +54,35 @@ function pieces(dimensions) {
     for (let i = -1.07; i < dimensions-1; i+=1.07) {
         for (let j = -1.07; j < dimensions-1; j+=1.07){
             for (let k = -1.07; k < dimensions-1; k+=1.07){
-                
+
                 if (k == -1.07){
                     back_face.push(cube(pstX=i, pstY=j, pstZ=k));
                 }
-                else{
-                    scene.add(cube(pstX=i, pstY=j, pstZ=k));
+                if (k == 0){
+                    mid_face.push(cube(pstX=i, pstY=j, pstZ=k));
                 }
+                if (k == 1.07){
+                    front_face.push(cube(pstX=i, pstY=j, pstZ=k));
+                }
+
             }
         }
     } 
+};
+
+function keyDownHandler(event) {
+    if(event.keyCode == 39) {
+        rightPressed = true;
+    }
+    else if(event.keyCode == 37) {
+        leftPressed = true;
+    }
+    if(event.keyCode == 40) {
+    	downPressed = true;
+    }
+    else if(event.keyCode == 38) {
+    	upPressed = true;
+    }
 };
 
 function init() {
@@ -67,47 +91,40 @@ function init() {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 7;
+    camera.position.y = 2;
 
     renderer =  new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
-
     
     // Create lights, add lights to scene
     var light1 = new THREE.DirectionalLight(0xDDEED3, 1);
     var light2 = new THREE.AmbientLight(0x7D7D7D);
-    light1.position.set( 0, 0, 1 );
+    light1.position.set(0, 0, 1);
 
-    
     // Orbital controls (rotation)
     controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.autoRotate = true;
+    //controls.autoRotate = true;
     controls.update();
 
+   
 }
-
-class Ball {
-    constructor(x,y) {
-        this.x = x;
-        this.y = y;
-    }
-};
 
 function render() {
     requestAnimationFrame(render);
- 
-    for (let i = 0; i < back_face.length; i++){
-        //back_face[i].rotation.x += 0.001;
-        back_face[i].rotation.z = Math.PI/2
+    var center = new THREE.Vector2(2, 0.5);
+     for (let i = 0; i < back_face.length; i++){
+        back_face[i].center = center;
+        back_face[i].rotation.z += ((Math.PI/2)/900);
+        scene.add(front_face[i]);
+        scene.add(mid_face[i]);
         
+
         scene.add(back_face[i]);
+    
     }
-    for (let j = 0; j < back_face.length; j++){
-        //back_face[i].rotation.x += 0.001;
-        back_face[j].rotation.z = -Math.PI/2
-        
-        scene.add(back_face[j]);
-    }
+
+
     controls.update();
     renderer.render(scene, camera);
 }
