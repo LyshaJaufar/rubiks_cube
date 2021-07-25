@@ -49,18 +49,17 @@ function pieces(dimensions) {
     for (let i = -1.07; i < dimensions-1; i+=1.07) {
         for (let j = -1.07; j < dimensions-1; j+=1.07){
             for (let k = -1.07; k < dimensions-1; k+=1.07){
-                scene.add(cube(pstX=i, pstY=j, pstZ=k));
+                
                 if (k == -1.07){
                     back_face.push(cube(pstX=i, pstY=j, pstZ=k));
+                }
+                else{
+                    scene.add(cube(pstX=i, pstY=j, pstZ=k));
                 }
             }
         }
     } 
-
-
-
 };
-
 
 function init() {
 
@@ -80,23 +79,35 @@ function init() {
     light1.position.set( 0, 0, 1 );
 
     
-
     // Orbital controls (rotation)
     controls = new THREE.OrbitControls(camera, renderer.domElement);
-    //controls.autoRotate = true;
+    controls.autoRotate = true;
     controls.update();
 
 }
 
+class Ball {
+    constructor(x,y) {
+        this.x = x;
+        this.y = y;
+    }
+};
+
 function render() {
     requestAnimationFrame(render);
-    /**
+ 
     for (let i = 0; i < back_face.length; i++){
-        back_face[i].position.x += 0.001;
-        back_face[i].position.y += 0.001;
+        //back_face[i].rotation.x += 0.001;
+        back_face[i].rotation.z = Math.PI/2
+        
         scene.add(back_face[i]);
-    }*/
-    console.log(back_face)
+    }
+    for (let j = 0; j < back_face.length; j++){
+        //back_face[i].rotation.x += 0.001;
+        back_face[j].rotation.z = -Math.PI/2
+        
+        scene.add(back_face[j]);
+    }
     controls.update();
     renderer.render(scene, camera);
 }

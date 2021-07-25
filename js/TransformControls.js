@@ -282,7 +282,7 @@ class TransformControls extends Object3D {
 
 		}
 
-	}
+	i
 
 	pointerMove( pointer ) {
 
