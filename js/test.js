@@ -69,21 +69,23 @@ function pieces(dimensions) {
         }
     } 
 };
+var xSpeed = 0.0001;
+var ySpeed = 0.0001;
 
-function keyDownHandler(event) {
-    if(event.keyCode == 39) {
-        rightPressed = true;
-    }
-    else if(event.keyCode == 37) {
-        leftPressed = true;
-    }
-    if(event.keyCode == 40) {
-    	downPressed = true;
-    }
-    else if(event.keyCode == 38) {
-    	upPressed = true;
+
+function moveCube(event) {
+    var keyCode = event.which;
+    if (keyCode == 82) {
+        for (let i = 0; i < back_face.length; i++){
+            back_face[i].rotation.z += (Math.PI/2);
+            scene.add(back_face[i]);
+        }
     }
 };
+
+window.addEventListener("keydown", moveCube);
+window.addEventListener("touchstart", moveCube);
+
 
 function init() {
 
@@ -106,28 +108,20 @@ function init() {
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     //controls.autoRotate = true;
     controls.update();
-
-   
-}
+};
 
 function render() {
     requestAnimationFrame(render);
-    var center = new THREE.Vector2(2, 0.5);
+    
      for (let i = 0; i < back_face.length; i++){
-        back_face[i].center = center;
-        back_face[i].rotation.z += ((Math.PI/2)/900);
         scene.add(front_face[i]);
         scene.add(mid_face[i]);
-        
-
         scene.add(back_face[i]);
-    
     }
-
-
     controls.update();
     renderer.render(scene, camera);
 }
+
 
 init();
 pieces(3);

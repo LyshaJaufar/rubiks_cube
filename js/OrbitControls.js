@@ -312,7 +312,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 	function getAutoRotationAngle() {
 
 		return 2 * Math.PI / 60 / 60 * scope.autoRotateSpeed;
-
+	
 	}
 
 	function getZoomScale() {
