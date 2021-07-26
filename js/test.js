@@ -18,12 +18,11 @@ var back_face = [];       // B slice
 var mid_face = [];        // S slice
 var front_face = [];      // F slice
 
-var top_face = [];          // U slice
+var top_face = [];             // U slice
 var mid = [];               // X slice
 var bottom = [];            // D slice
 
 var keyPressed = false;
-counter = 0;
 
 function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
 	const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);						                 // vertices & faces
@@ -76,7 +75,6 @@ function pieces(dimensions) {
 };
 
 function moveCube(event) {
-    keyPressed = true;
     var keyCode = event.which;
     if (keyCode == 76) {
         for (let i = 0; i < back_face.length; i++){
@@ -94,6 +92,24 @@ function moveCube(event) {
         for (let i = 0; i < mid_face.length; i++){
             mid_face[i].rotation.z += (Math.PI/2);
             scene.add(mid_face[i]);
+        }
+    }
+    if (keyCode == 70) {
+        keyPressed = true;
+        for (let i = 0; i < top_face.length; i++){
+            top_face[i].rotation.x += (Math.PI/2);
+            scene.add(top_face[i]);
+            for (let j = 0; j < top_face.length; j++){
+                if (top_face[j] == back_face[j]){
+                    scene.remove(back_face[j])
+                }
+                if (top_face[j] == front_face[j] ){
+                    scene.remove(top_face[j])
+                }
+                if (top_face[j] == mid_face[j]){
+                    scene.remove(mid_face[j])
+                }
+            }
         }
     }
 
@@ -126,34 +142,40 @@ function init() {
     controls.update();
 };
 
+function removing(){
+
+    for (let i = 0; i < top_face.length; i++){
+        for (let j = 0; j < back_face.length; j++){
+            scene.remove(front_face[i]);
+            scene.remove(mid_face[i]);
+            scene.remove(back_face[i]);
+
+        }
+    }
+};
+
 function create(){
     for (let i = 0; i < back_face.length; i++){
         scene.add(front_face[i]);
         scene.add(mid_face[i]);
         scene.add(back_face[i]);
     }
-
 };
-function removing(){
-    for (let i = 0; i < back_face.length; i++){
-        scene.remove(front_face[i]);
-        scene.remove(mid_face[i]);
-        scene.remove(back_face[i]);
-    }
 
-};
 function render() {
     requestAnimationFrame(render);
     if (keyPressed == false){
         create()
     }
     if (keyPressed == true){
-        removing
+        removing()
     }
+    
     console.log(keyPressed)
     controls.update();
     renderer.render(scene, camera);
 };
+
 
 
 
