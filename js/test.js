@@ -18,10 +18,12 @@ var back_face = [];       // B slice
 var mid_face = [];        // S slice
 var front_face = [];      // F slice
 
-var rightPressed = false;
-var leftPressed = false;
-var upPressed = false;
-var downPressed = false;
+var top_face = [];          // U slice
+var mid = [];               // X slice
+var bottom = [];            // D slice
+
+var keyPressed = false;
+counter = 0;
 
 function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
 	const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);						                 // vertices & faces
@@ -54,7 +56,9 @@ function pieces(dimensions) {
     for (let i = -1.07; i < dimensions-1; i+=1.07) {
         for (let j = -1.07; j < dimensions-1; j+=1.07){
             for (let k = -1.07; k < dimensions-1; k+=1.07){
-
+                if (i == 1.07){
+                    top_face.push(cube(pstX=i, pstY=j, pstZ=k));
+                }
                 if (k == -1.07){
                     back_face.push(cube(pstX=i, pstY=j, pstZ=k));
                 }
@@ -65,22 +69,34 @@ function pieces(dimensions) {
                     front_face.push(cube(pstX=i, pstY=j, pstZ=k));
                 }
 
+
             }
         }
     } 
 };
-var xSpeed = 0.0001;
-var ySpeed = 0.0001;
-
 
 function moveCube(event) {
+    keyPressed = true;
     var keyCode = event.which;
-    if (keyCode == 82) {
+    if (keyCode == 76) {
         for (let i = 0; i < back_face.length; i++){
             back_face[i].rotation.z += (Math.PI/2);
             scene.add(back_face[i]);
         }
     }
+    if (keyCode == 82) {
+        for (let i = 0; i < front_face.length; i++){
+            front_face[i].rotation.z += (Math.PI/2);
+            scene.add(front_face[i]);
+        }
+    }
+    if (keyCode == 77) {
+        for (let i = 0; i < mid_face.length; i++){
+            mid_face[i].rotation.z += (Math.PI/2);
+            scene.add(mid_face[i]);
+        }
+    }
+
 };
 
 window.addEventListener("keydown", moveCube);
@@ -106,21 +122,39 @@ function init() {
 
     // Orbital controls (rotation)
     controls = new THREE.OrbitControls(camera, renderer.domElement);
-    //controls.autoRotate = true;
+    //controls.autoRotate = true;j
     controls.update();
 };
 
-function render() {
-    requestAnimationFrame(render);
-    
-     for (let i = 0; i < back_face.length; i++){
+function create(){
+    for (let i = 0; i < back_face.length; i++){
         scene.add(front_face[i]);
         scene.add(mid_face[i]);
         scene.add(back_face[i]);
     }
+
+};
+function removing(){
+    for (let i = 0; i < back_face.length; i++){
+        scene.remove(front_face[i]);
+        scene.remove(mid_face[i]);
+        scene.remove(back_face[i]);
+    }
+
+};
+function render() {
+    requestAnimationFrame(render);
+    if (keyPressed == false){
+        create()
+    }
+    if (keyPressed == true){
+        removing
+    }
+    console.log(keyPressed)
     controls.update();
     renderer.render(scene, camera);
-}
+};
+
 
 
 init();
