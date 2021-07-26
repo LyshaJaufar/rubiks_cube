@@ -176,6 +176,11 @@ function render() {
     renderer.render(scene, camera);
 };
 
+var testCube = {
+    position : 5,
+    colour : 'green'
+};
+var currentColour = testCube.colour;
 
 
 
