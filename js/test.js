@@ -15,6 +15,7 @@ YELLOW = new THREE.Color(0xf2eb0f);
 const colours = [GREEN, BLUE, RED, ORANGE, WHITE, YELLOW];
 
 var cube_pieces = [];
+dimensions = 4;
 
 var keyPressed = false;
 
@@ -70,16 +71,77 @@ function renderCube(){
 
 function moveCube(event) {
     var keyCode = event.which;
-
-    if (keyCode == 82) {
-        for (let i = 0; i < cube_pieces.length; i++){
-            for (let j = 0; j < cube_pieces[i].length; j++){
-                //cube_pieces[i][j][0].rotation.x += (Math.PI/2);
-                cube_pieces[i][j][1].rotation.x += (Math.Pi/2);
-                scene.add(cube_pieces[i]);
+    
+    // back and front 
+    for (let i = 0; i < dimensions; i++){
+        if (keyCode == 65+i) {
+            for (let j = 0; j < cube_pieces.length; j++){
+                for (let k = 0; k < cube_pieces[i].length; k++){
+                    cube_pieces[j][k][0+i].rotation.z += (Math.PI/2);
+                    scene.add(cube_pieces[j]);
+                }
             }
         }
-        
+    }
+
+    // back and front counter-clockwise
+    for (let i = 0; i < dimensions; i++){
+        if (keyCode == dimensions+65+i) {
+            for (let j = 0; j < cube_pieces.length; j++){
+                for (let k = 0; k < cube_pieces[i].length; k++){
+                    cube_pieces[j][k][0+i].rotation.z -= (Math.PI/2);
+                    scene.add(cube_pieces[j]);
+                }
+            }
+        }
+    }
+
+    // Up and down 
+    for (let i = 0; i < dimensions; i++){
+        if (keyCode == (dimensions*2)+65+i) {
+            for (let j = 0; j < cube_pieces.length; j++){
+                for (let k = 0; k < cube_pieces[i].length; k++){
+                    cube_pieces[j][i][k].rotation.y -= (Math.PI/2);
+                    scene.add(cube_pieces[j]);
+                }
+            }
+        }
+    }
+
+    // Up and down counter-clockwise
+    for (let i = 0; i < dimensions; i++){
+        if (keyCode == (dimensions*3)+65+i) {
+            for (let j = 0; j < cube_pieces.length; j++){
+                for (let k = 0; k < cube_pieces[i].length; k++){
+                    cube_pieces[j][i][k].rotation.y += (Math.PI/2);
+                    scene.add(cube_pieces[j]);
+                }
+            }
+        }
+    }
+
+    // Left and right 
+    for (let i = 0; i < dimensions; i++){
+        if (keyCode == (dimensions*4)+65+i) {
+            for (let j = 0; j < cube_pieces.length; j++){
+                for (let k = 0; k < cube_pieces[i].length; k++){
+                    cube_pieces[i][j][k].rotation.x += (Math.PI/2);
+                    scene.add(cube_pieces[j]);
+                }
+            }
+        }
+    }
+
+    // Left and right counter-clockwise
+    for (let i = 0; i < dimensions; i++){
+        if (keyCode == (dimensions*5)+65+i) {
+            for (let j = 0; j < cube_pieces.length; j++){
+                for (let k = 0; k < cube_pieces[i].length; k++){
+                    cube_pieces[i][j][k].rotation.x -= (Math.PI/2);
+                    scene.add(cube_pieces[j]);
+                }
+            }
+        }
     }
 };
 
@@ -152,6 +214,6 @@ var currentColour = testCube.colour;
 
 
 init();
-cubeLayout(3);
+cubeLayout(dimensions);
 renderCube();
 render();
