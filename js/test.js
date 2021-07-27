@@ -15,7 +15,7 @@ YELLOW = new THREE.Color(0xf2eb0f);
 const colours = [GREEN, BLUE, RED, ORANGE, WHITE, YELLOW];
 
 var cube_pieces = [];
-dimensions = 4;
+dimensions = 3;
 
 var keyPressed = false;
 
@@ -168,7 +168,7 @@ function init() {
 
     // Orbital controls (rotation)
     controls = new THREE.OrbitControls(camera, renderer.domElement);
-    //controls.autoRotate = true;j
+    //controls.autoRotate = true;
     controls.update();
 };
 
