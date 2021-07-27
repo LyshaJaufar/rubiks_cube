@@ -15,7 +15,7 @@ YELLOW = new THREE.Color(0xf2eb0f);
 const colours = [GREEN, BLUE, RED, ORANGE, WHITE, YELLOW];
 
 var cube_pieces = [];
-dimensions = 3;
+dimensions = 15;
 
 
 function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
