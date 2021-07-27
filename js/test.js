@@ -15,9 +15,8 @@ YELLOW = new THREE.Color(0xf2eb0f);
 const colours = [GREEN, BLUE, RED, ORANGE, WHITE, YELLOW];
 
 var cube_pieces = [];
-dimensions = 3;
+dimensions = 5;
 
-var keyPressed = false;
 
 function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
 	const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);						                 // vertices & faces
@@ -184,34 +183,11 @@ function removing(){
 };
 
 
-function create(){
-    for (let i = 0; i < back_face.length; i++){
-        scene.add(front_face[i]);
-        scene.add(mid_face[i]);
-        scene.add(back_face[i]);
-    }
-}
-
 function render() {
-    requestAnimationFrame(render);
-    if (keyPressed == false){
-        //create()
-    }
-    if (keyPressed == true){
-        removing()
-    }
-    
+    requestAnimationFrame(render); 
     controls.update();
     renderer.render(scene, camera);
 };
-
-var testCube = {
-    position : 5,
-    colour : 'green'
-};
-var currentColour = testCube.colour;
-
-
 
 init();
 cubeLayout(dimensions);
