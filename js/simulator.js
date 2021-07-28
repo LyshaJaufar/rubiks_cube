@@ -15,7 +15,7 @@ YELLOW = new THREE.Color(0xf2eb0f);
 const colours = [GREEN, BLUE, RED, ORANGE, WHITE, YELLOW];
 
 var cube_pieces = [];
-dimensions = 15;
+dimensions = 3;
 
 
 function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
@@ -154,7 +154,8 @@ function init() {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 7;
-    camera.position.y = 2;
+    camera.position.y = 4;
+    camera.position.x = 7;
 
     renderer =  new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
