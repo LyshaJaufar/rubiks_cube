@@ -15,7 +15,6 @@ YELLOW = new THREE.Color(0xf2eb0f);
 const colours = [GREEN, BLUE, RED, ORANGE, WHITE, YELLOW];
 
 var cube_pieces = [];
-var dimensions = 3;
 
 function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
 	const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);						                 // vertices & faces
@@ -43,20 +42,34 @@ function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
 
 	return cube;
 }
-
-function getUserInput(){
+function getUserInput(){}
     $(document).on("keypress", "input", function(e){
         if(e.which == 13){
-            dimensions = $(this).val();
-                console.log("You've entered: " + dimensions);
-                return dimensions;
+            removePieces();
+            cube_pieces = [];
+            var inputVal = $(this).val();
+                console.log("You've entered: " + inputVal);
+                for (let i = 0; i < inputVal; i+=1.07) {
+                    cube_pieces.push([]);
+                    for (let j = 0; j < inputVal; j+=1.07){
+                        cube_pieces[Math.floor(i)].push([]);
+                        for (let k = 0; k < inputVal; k+=1.07){
+                            cube_pieces[Math.floor(i)][Math.floor(j)].push(cube(pstX=i, pstY=j, pstZ=k));
+                        }
+                    }
+                }
+                
+                renderCube();
+                console.log(cube_pieces) 
+
         }
     });
-    cubeLayout();
-};
 
 function cubeLayout() {
-    console.log('here', dimensions);
+    var dimensions;
+    if (dimensions == undefined){
+        dimensions = 3;
+    }
     for (let i = 0; i < dimensions; i+=1.07) {
         cube_pieces.push([]);
         for (let j = 0; j < dimensions; j+=1.07){
@@ -66,10 +79,17 @@ function cubeLayout() {
             }
         }
     } 
-    renderCube();
 
 };
-
+function removePieces() {
+    for (let i =  0; i < cube_pieces.length; i++){
+        for (let j = 0; j < cube_pieces[i].length; j++){
+            for (let k = 0; k < cube_pieces[i][j].length; k++){
+                scene.remove(cube_pieces[i][j][k]);
+            }
+        }
+    }
+}
 function renderCube(){
     for (let i =  0; i < cube_pieces.length; i++){
         for (let j = 0; j < cube_pieces[i].length; j++){
@@ -161,8 +181,6 @@ window.addEventListener("touchstart", moveCube);
 
 
 function init() {
-    var dimension = getUserInput();
-    console.log("right", dimension)
 
     // Set up scene + renderer
     scene = new THREE.Scene();
@@ -193,6 +211,6 @@ function render() {
 };
 
 init();
-cubeLayout();
+
 
 render();
