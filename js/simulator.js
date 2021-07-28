@@ -15,6 +15,7 @@ YELLOW = new THREE.Color(0xf2eb0f);
 const colours = [GREEN, BLUE, RED, ORANGE, WHITE, YELLOW];
 
 var cube_pieces = [];
+var dimensions = 3;
 
 function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
 	const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);						                 // vertices & faces
@@ -43,14 +44,20 @@ function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
 	return cube;
 }
 
+function getUserInput(){
+    $(document).on("keypress", "input", function(e){
+        if(e.which == 13){
+            dimensions = $(this).val();
+                console.log("You've entered: " + dimensions);
+                return dimensions;
+        }
+    });
+    cubeLayout();
+};
+
 function cubeLayout() {
-    dimensions = document.getElementById("dimensions").value;
-    if (dimensions == undefined){
-        console.log('es')
-        dimensions = 3;
-    }
+    console.log('here', dimensions);
     for (let i = 0; i < dimensions; i+=1.07) {
-        console.log('here', dimensions)
         cube_pieces.push([]);
         for (let j = 0; j < dimensions; j+=1.07){
             cube_pieces[Math.floor(i)].push([]);
@@ -59,6 +66,7 @@ function cubeLayout() {
             }
         }
     } 
+    renderCube();
 
 };
 
@@ -153,6 +161,8 @@ window.addEventListener("touchstart", moveCube);
 
 
 function init() {
+    var dimension = getUserInput();
+    console.log("right", dimension)
 
     // Set up scene + renderer
     scene = new THREE.Scene();
@@ -184,5 +194,5 @@ function render() {
 
 init();
 cubeLayout();
-renderCube();
+
 render();
