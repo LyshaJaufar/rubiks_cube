@@ -15,6 +15,7 @@ YELLOW = new THREE.Color(0xf2eb0f);
 const colours = [GREEN, BLUE, RED, ORANGE, WHITE, YELLOW];
 
 var cube_pieces = [];
+var dimensions;
 
 function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
 	const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);						                 // vertices & faces
@@ -58,7 +59,7 @@ function getUserInput(){}
                         }
                     }
                 }
-                
+                dimensions = inputVal;
                 renderCube();
                 console.log(cube_pieces) 
 
@@ -66,10 +67,6 @@ function getUserInput(){}
     });
 
 function cubeLayout() {
-    var dimensions;
-    if (dimensions == undefined){
-        dimensions = 3;
-    }
     for (let i = 0; i < dimensions; i+=1.07) {
         cube_pieces.push([]);
         for (let j = 0; j < dimensions; j+=1.07){
@@ -79,7 +76,6 @@ function cubeLayout() {
             }
         }
     } 
-
 };
 function removePieces() {
     for (let i =  0; i < cube_pieces.length; i++){
@@ -102,7 +98,7 @@ function renderCube(){
 
 function moveCube(event) {
     var keyCode = event.which;
-    
+
     // back and front 
     for (let i = 0; i < dimensions; i++){
         if (keyCode == 65+i) {
@@ -117,7 +113,8 @@ function moveCube(event) {
 
     // back and front counter-clockwise
     for (let i = 0; i < dimensions; i++){
-        if (keyCode == dimensions+65+i) {
+        if (keyCode == parseInt(dimensions)+(65+i)) {
+            console.log("keycode", keyCode)
             for (let j = 0; j < cube_pieces.length; j++){
                 for (let k = 0; k < cube_pieces[i].length; k++){
                     cube_pieces[j][k][0+i].rotation.z -= (Math.PI/2);
@@ -130,6 +127,7 @@ function moveCube(event) {
     // Up and down 
     for (let i = 0; i < dimensions; i++){
         if (keyCode == (dimensions*2)+65+i) {
+            console.log("keycode", keyCode)
             for (let j = 0; j < cube_pieces.length; j++){
                 for (let k = 0; k < cube_pieces[i].length; k++){
                     cube_pieces[j][i][k].rotation.y -= (Math.PI/2);
@@ -142,6 +140,7 @@ function moveCube(event) {
     // Up and down counter-clockwise
     for (let i = 0; i < dimensions; i++){
         if (keyCode == (dimensions*3)+65+i) {
+            console.log("keycode", keyCode)
             for (let j = 0; j < cube_pieces.length; j++){
                 for (let k = 0; k < cube_pieces[i].length; k++){
                     cube_pieces[j][i][k].rotation.y += (Math.PI/2);
