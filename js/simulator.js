@@ -67,6 +67,7 @@ function getUserInput(){}
     });
 
 function cubeLayout() {
+    dimensions = 3;
     for (let i = 0; i < dimensions; i+=1.07) {
         cube_pieces.push([]);
         for (let j = 0; j < dimensions; j+=1.07){
@@ -76,7 +77,9 @@ function cubeLayout() {
             }
         }
     } 
+    console.log(cube_pieces)
 };
+
 function removePieces() {
     for (let i =  0; i < cube_pieces.length; i++){
         for (let j = 0; j < cube_pieces[i].length; j++){
@@ -86,7 +89,9 @@ function removePieces() {
         }
     }
 }
+
 function renderCube(){
+    console.log('current', cube_pieces)
     for (let i =  0; i < cube_pieces.length; i++){
         for (let j = 0; j < cube_pieces[i].length; j++){
             for (let k = 0; k < cube_pieces[i][j].length; k++){
@@ -114,7 +119,6 @@ function moveCube(event) {
     // back and front counter-clockwise
     for (let i = 0; i < dimensions; i++){
         if (keyCode == parseInt(dimensions)+(65+i)) {
-            console.log("keycode", keyCode)
             for (let j = 0; j < cube_pieces.length; j++){
                 for (let k = 0; k < cube_pieces[i].length; k++){
                     cube_pieces[j][k][0+i].rotation.z -= (Math.PI/2);
@@ -127,7 +131,6 @@ function moveCube(event) {
     // Up and down 
     for (let i = 0; i < dimensions; i++){
         if (keyCode == (dimensions*2)+65+i) {
-            console.log("keycode", keyCode)
             for (let j = 0; j < cube_pieces.length; j++){
                 for (let k = 0; k < cube_pieces[i].length; k++){
                     cube_pieces[j][i][k].rotation.y -= (Math.PI/2);
@@ -140,7 +143,6 @@ function moveCube(event) {
     // Up and down counter-clockwise
     for (let i = 0; i < dimensions; i++){
         if (keyCode == (dimensions*3)+65+i) {
-            console.log("keycode", keyCode)
             for (let j = 0; j < cube_pieces.length; j++){
                 for (let k = 0; k < cube_pieces[i].length; k++){
                     cube_pieces[j][i][k].rotation.y += (Math.PI/2);
@@ -181,6 +183,7 @@ window.addEventListener("touchstart", moveCube);
 
 function init() {
 
+
     // Set up scene + renderer
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -201,6 +204,9 @@ function init() {
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     //controls.autoRotate = true;
     controls.update();
+
+    cubeLayout();
+    renderCube();
 };
 
 function render() {
@@ -210,6 +216,4 @@ function render() {
 };
 
 init();
-
-
 render();
