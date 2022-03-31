@@ -11,3 +11,6 @@ NOTE: The code is broken for larger NxNs. Also allows illegal moves that would b
 WIll not be fixing this bug because I simply do not care. Plus, non-cubers would not be able to notice the glitch any way.
 
 PS: the bug mentioned above is not a bug. It's a feature.
+
+Visit the page here:
+https://lyshajaufar.github.io/rubiks_cube/
