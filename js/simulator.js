@@ -58,8 +58,8 @@ function init() {
 // Generate individual pieces for the rubik's cube
 function cube(pstX=0, pstY=0, pstZ=0, sizeX=1, sizeY=1, sizeZ=1) {
     // vertices & faces
-	const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);    						                 
-	geometry.faces[0].color = RED;				
+	const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);  						                 
+  	geometry.faces[0].color = RED;				
 	geometry.faces[1].color = RED;
 
 	geometry.faces[2].color = ORANGE;				
