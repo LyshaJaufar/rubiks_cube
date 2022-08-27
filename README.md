@@ -1,4 +1,4 @@
-# rubiks_cube
+# rubiks cube
 
 Cube Simulator for non-cubers
 
